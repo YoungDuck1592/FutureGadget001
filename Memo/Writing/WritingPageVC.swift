@@ -22,12 +22,12 @@ class WritingPageVC: UIViewController {
         setupActions()
         setupBindings()
         
-        // 5초마다 totalHeight 출력하는 타이머 설정
-        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            let totalHeight = self.writingPageView.titleTextView.frame.maxY + self.writingPageView.hashtagTextView.frame.height + self.writingPageView.contentTextView.frame.height
-            print("Total Height: \(totalHeight)")
-        }
+//        // 5초마다 totalHeight 출력하는 타이머 설정
+//        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+//            guard let self = self else { return }
+//            let totalHeight = self.writingPageView.titleTextView.frame.maxY + self.writingPageView.hashtagTextView.frame.height + self.writingPageView.contentTextView.frame.height
+//            print("Total Height: \(totalHeight)")
+//        }
     }
 
     private func setupView() {
@@ -96,6 +96,12 @@ extension WritingPageVC: UIImagePickerControllerDelegate, UINavigationController
         // NSAttributedString 생성
         let attributedStringWithImage = NSAttributedString(attachment: textAttachment)
         
+        // 플레이스 홀더 숨기기
+        if writingPageView.contentTextView.textColor == UIColor.lightGray {
+            writingPageView.contentTextView.text = nil
+            writingPageView.contentTextView.textColor = UIColor.black
+        }
+
         // contentTextView의 현재 텍스트에 이미지 추가
         if let oldText = writingPageView.contentTextView.attributedText {
             let newText = NSMutableAttributedString(attributedString: oldText)
@@ -105,8 +111,12 @@ extension WritingPageVC: UIImagePickerControllerDelegate, UINavigationController
             writingPageView.contentTextView.attributedText = attributedStringWithImage
         }
         
+        // 텍스트 뷰의 편집 상태 설정
+        writingPageView.contentTextView.becomeFirstResponder()
+        
         picker.dismiss(animated: true, completion: nil)
     }
+
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)

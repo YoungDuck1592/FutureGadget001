@@ -97,6 +97,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3177A8802B0CF8170061293D /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		317D6FE02B02102300C5EDC2 = {
 			isa = PBXGroup;
 			children = (
@@ -120,8 +127,8 @@
 				31AEAD542B078108009FCFAB /* SignUp */,
 				317D703C2B021C6A00C5EDC2 /* Login */,
 				317D70752B03BF3100C5EDC2 /* List */,
-				317D703E2B021DAB00C5EDC2 /* Profile */,
 				317D703F2B021DCB00C5EDC2 /* Writing */,
+				3177A8802B0CF8170061293D /* Profile */,
 				317D703B2B021C5600C5EDC2 /* Delegate */,
 				317D70672B039E9B00C5EDC2 /* Extension */,
 				31AEAD462B0762B5009FCFAB /* Fonts */,
@@ -152,13 +159,6 @@
 				317D70442B021FD800C5EDC2 /* LoginPageModel.swift */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		317D703E2B021DAB00C5EDC2 /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Profile;
 			sourceTree = "<group>";
 		};
 		317D703F2B021DCB00C5EDC2 /* Writing */ = {
