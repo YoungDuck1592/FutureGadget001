@@ -40,6 +40,7 @@ class WritingPageView: UIScrollView {
         $0.isUserInteractionEnabled = true
         $0.text = "내용을 입력하세요"
         $0.textColor = UIColor.lightGray
+        $0.addBorder()
     }
     
     let imagePickerButton: UIButton = {
@@ -90,22 +91,26 @@ class WritingPageView: UIScrollView {
         
         titleTextView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.leading.equalTo(safeAreaLayoutGuide).inset(20)
+            make.trailing.equalTo(safeAreaLayoutGuide).inset(20)
             make.height.equalTo(40).priority(.low)
         }
         
         hashtagTextView.snp.makeConstraints { make in
             make.top.equalTo(titleTextView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.leading.equalTo(safeAreaLayoutGuide).inset(20)
+            make.trailing.equalTo(safeAreaLayoutGuide).inset(20)
             make.height.equalTo(40).priority(.low)
         }
         
         contentTextView.snp.makeConstraints { make in
             make.top.equalTo(hashtagTextView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().inset(20)
             make.height.greaterThanOrEqualTo(100).priority(.low)
         }
     }
+
 
     
     private func setupToolbar(for textView: UITextView) {
@@ -197,7 +202,7 @@ extension WritingPageView: UITextViewDelegate {
     
     // 스크롤 뷰의 contentSize를 업데이트하는 메서드
     private func updateScrollViewContentSize() {
-        let extraSpace: CGFloat = 100
+        let extraSpace: CGFloat = 300
         let totalHeight = titleTextView.frame.maxY + hashtagTextView.frame.height + contentTextView.frame.height + extraSpace
         contentSize = CGSize(width: frame.width, height: totalHeight)
     }
