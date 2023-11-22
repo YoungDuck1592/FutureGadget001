@@ -40,7 +40,6 @@ class WritingPageView: UIScrollView {
         $0.isUserInteractionEnabled = true
         $0.text = "내용을 입력하세요"
         $0.textColor = UIColor.lightGray
-        $0.addBorder()
     }
     
     let imagePickerButton: UIButton = {
