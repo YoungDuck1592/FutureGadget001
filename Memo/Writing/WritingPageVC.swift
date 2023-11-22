@@ -21,13 +21,12 @@ class WritingPageVC: UIViewController {
         setupView()
         setupActions()
         setupBindings()
-        
-//        // 5초마다 totalHeight 출력하는 타이머 설정
-//        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-//            guard let self = self else { return }
-//            let totalHeight = self.writingPageView.titleTextView.frame.maxY + self.writingPageView.hashtagTextView.frame.height + self.writingPageView.contentTextView.frame.height
-//            print("Total Height: \(totalHeight)")
-//        }
+        registerForKeyboardNotifications()
+    }
+    
+    deinit {
+        // 키보드 알림 제거
+        NotificationCenter.default.removeObserver(self)
     }
 
     private func setupView() {
@@ -50,10 +49,35 @@ class WritingPageVC: UIViewController {
         // 텍스트 뷰의 텍스트를 뷰 모델의 프로퍼티에 바인딩할 수 있습니다.
         // 또한 버튼 탭과 같은 액션을 처리할 수 있습니다.
     }
+    
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            writingPageView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        }
+    }
+
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        writingPageView.contentInset = .zero
+    }
+    
 }
 
 // MARK: - UITextViewDelegate
 extension WritingPageVC: UITextViewDelegate {
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if textView.isFirstResponder {
+            var cursorRect = textView.caretRect(for: textView.selectedTextRange!.end)
+            cursorRect.size.height += 8 // 추가 여백
+            textView.scrollRectToVisible(cursorRect, animated: true)
+        }
+    }
+    
     func textViewDidChange(_ textView: UITextView) {
         // 텍스트 변화 처리
     }
